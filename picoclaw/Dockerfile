@@ -6,4 +6,3 @@ RUN apk add --no-cache \
     jq \
     git 
 
-USER picoclaw
