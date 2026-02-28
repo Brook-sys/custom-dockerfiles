@@ -7,7 +7,7 @@ RUN apk add --no-cache \
     git 
 
 # Criar o usuário caso não exista na imagem base
-RUN addgroup -S picoclaw 2>/dev/null || true && \
-    adduser -S -G picoclaw -u 1000 picoclaw 2>/dev/null || true
+RUN addgroup -g 1000 picoclaw || true && \
+    adduser -D -u 1000 -G picoclaw picoclaw || true
 
 USER picoclaw
