@@ -4,7 +4,8 @@ USER root
 
 RUN apk add --no-cache \
     jq \
-    git 
+    git \
+    openssh-client
 
 # Criar o usuário caso não exista na imagem base
 RUN addgroup -g 1000 picoclaw || true && \
