@@ -5,6 +5,7 @@ USER root
 RUN apk add --no-cache \
     jq \
     git \
+    curl \
     openssh-client
 
 # Criar o usuário caso não exista na imagem base
