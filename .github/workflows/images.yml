@@ -13,8 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.generate-matrix.outputs.matrix }}
+      owner_lc: ${{ steps.set-owner.outputs.owner_lc }}
     steps:
       - uses: actions/checkout@v4
+
+
+      - id: set-owner
+        run: |
+          OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "owner_lc=$OWNER_LC" >> $GITHUB_OUTPUT
 
       - id: generate-matrix
         run: |
@@ -53,14 +60,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.discover-dockerfiles.outputs.matrix) }}
+      
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set lowercase owner
-        run: 
-          OWNER_LC=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-          echo "OWNER_LC=$OWNER_LC" >> $GITHUB_ENV
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -76,4 +79,4 @@ jobs:
           file: ${{ matrix.dockerfile }}
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/${{ matrix.name }}:latest
+            ghcr.io/${{ needs.discover-dockerfiles.outputs.owner_lc}}/${{ matrix.name }}:latest
