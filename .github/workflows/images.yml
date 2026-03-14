@@ -1,0 +1,74 @@
+name: Build and push all images (auto discover)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  discover-dockerfiles:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: generate-matrix
+        run: |
+          # Encontra todos Dockerfiles no repo
+          files=$(find services -name 'Dockerfile')
+
+          # Monta JSON da matrix: [{ "name": "...", "dockerfile": "..." }, ...]
+          json='{"include":['
+          first=true
+          for f in $files; do
+            # Nome da imagem = nome da pasta onde está o Dockerfile
+            dir=$(dirname "$f")
+            name=$(basename "$dir")
+            # Escapa caminhos e nomes
+            entry=$(printf '{"name":"%s","dockerfile":"%s"},' "$name" "$f")
+            if [ "$first" = true ]; then
+              json="$json$entry"
+              first=false
+            else
+              json="$json$entry"
+            fi
+          done
+          # Remove vírgula final e fecha JSON
+          json=${json%,}
+          json="$json]}"
+
+          echo "matrix=$json" >> $GITHUB_OUTPUT
+
+  build-and-push:
+    needs: discover-dockerfiles
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.discover-dockerfiles.outputs.matrix) }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.name }}
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.context || '.' }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ matrix.name }}:latest
