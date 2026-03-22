@@ -10,7 +10,8 @@ RUN apk add --no-cache \
     jq \
     git \
     curl \
-    openssh-client
+    openssh-client \
+    uv
 
 ENV TZ=America/Sao_Paulo
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
