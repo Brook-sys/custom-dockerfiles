@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     openssh-client \
     uv
 
+#definir timezone
 ENV TZ=America/Sao_Paulo
-RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 
