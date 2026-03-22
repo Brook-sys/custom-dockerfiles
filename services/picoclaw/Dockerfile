@@ -13,7 +13,6 @@ RUN apk add --no-cache \
     openssh-client \
     uv
 
-#definir timezone
 ENV TZ=America/Sao_Paulo
 
 
