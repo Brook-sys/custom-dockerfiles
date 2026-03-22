@@ -13,6 +13,5 @@ RUN apk add --no-cache \
     openssh-client \
     uv
 
-ENV TZ=America/Sao_Paulo
 
 
