@@ -6,13 +6,18 @@ LABEL org.opencontainers.image.source="https://github.com/Brook-sys/custom-docke
       org.opencontainers.image.description="Picoclaw estendido com pacotes adicionais para homelab" \
       org.opencontainers.image.licenses="MIT"
 
+ENV GOPATH=/root/go
+ENV PATH="${PATH}:/root/go/bin"
+
 RUN apk add --no-cache \
+    ca-certificates \
     jq \
     git \
     curl \
     openssh-client \
     uv \
-    tar
+    tar \
+    go
 
 #Instalando engram
 RUN curl -L \
