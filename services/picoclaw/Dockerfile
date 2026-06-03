@@ -17,7 +17,9 @@ RUN apk add --no-cache \
     openssh-client \
     uv \
     tar \
-    go
+    go \
+    nodejs \
+    npm
 
 #Instalando engram
 RUN curl -L \
