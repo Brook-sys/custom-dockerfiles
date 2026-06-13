@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget unzip ca-certificates \
     build-essential gcc g++ make scons \
     xvfb imagemagick ffmpeg \
-    openjdk-17-jdk-headless \
+    openjdk-21-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
 
 # 2. Variáveis para versão do Godot
