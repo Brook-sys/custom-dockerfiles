@@ -56,6 +56,9 @@ RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_
     rm -rf templates.tpz temp_templates
 
 #Ferramentas adicionais para manipulação e extração de arquivos compactados vindos de itch.io/opengameart e etc.
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    unrar p7zip-full
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        unrar-free \
+        7zip \
+    && rm -rf /var/lib/apt/lists/*
 
