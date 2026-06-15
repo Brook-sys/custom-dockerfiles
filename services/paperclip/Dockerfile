@@ -55,3 +55,7 @@ RUN mkdir -p /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_
     mv temp_templates/templates/* /root/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/ && \
     rm -rf templates.tpz temp_templates
 
+#Ferramentas adicionais para manipulação e extração de arquivos compactados vindos de itch.io/opengameart e etc.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    unrar p7zip-full
+
