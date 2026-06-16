@@ -38,7 +38,7 @@ RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
 # ==============================================================================
 # ASSUNTO 3: GODOT ENGINE & EXPORT TEMPLATES
 # ==============================================================================
-ENV GODOT_VERSION=4.6
+ENV GODOT_VERSION=4.6.3
 ENV GODOT_RELEASE=stable
 
 # Baixa e instala o binário da Engine
