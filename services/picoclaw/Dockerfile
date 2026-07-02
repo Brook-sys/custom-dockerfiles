@@ -1,4 +1,4 @@
-FROM docker.io/sipeed/picoclaw:launcher
+FROM docker.io/sipeed/picoclaw:nightly-launcher
 
 # Labels para GHCR e metadados
 LABEL org.opencontainers.image.source="https://github.com/Brook-sys/custom-dockerfiles" \
