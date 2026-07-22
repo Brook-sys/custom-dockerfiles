@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-ARG OPENCLAW_IMAGE=ghcr.io/openclaw/openclaw:latest
+ARG OPENCLAW_IMAGE=ghcr.io/openclaw/openclaw:2026.7.1
 ARG GO_IMAGE=golang:1.26-bookworm
 
 
